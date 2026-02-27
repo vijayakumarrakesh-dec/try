@@ -4,16 +4,29 @@
   <title>Bloom Map 🌸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+  <!-- Leaflet JS -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <style>
-    body { margin:0; font-family: Arial; }
-    #map { height: 100vh; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* FIX: ensures map fills screen */
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
 
     .popup-img {
-      width: 100px;
-      border-radius: 10px;
+      width: 200px;
+      border-radius: 12px;
+      animation: fadeIn 1s ease-in-out;
     }
 
     .love-text {
@@ -22,6 +35,11 @@
       margin-top: 8px;
       color: #ff4d88;
       font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0; transform: scale(0.9);}
+      to {opacity:1; transform: scale(1);}
     }
   </style>
 </head>
@@ -33,11 +51,13 @@
   // Initialize map centered on Coimbatore
   var map = L.map('map').setView([11.0168, 76.9558], 13);
 
+  // Load map tiles
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+    maxZoom: 19,
+    attribution: '© OpenStreetMap'
   }).addTo(map);
 
-  // 🌼 Example bloom spots
+  // 🌼 Bloom spots (optional markers)
   L.marker([11.0183, 76.9725]).addTo(map)
     .bindPopup("🌸 Tabebuia Bloom Spot");
 
@@ -45,19 +65,16 @@
     .bindPopup("🌼 Yellow blossoms here!");
 
   // ❤️ SPECIAL MARKER (HER LOCATION)
-  var specialMarker = L.marker([11°01'36.2"N 76°59'15.3"E]).addTo(map);
-
-  specialMarker.bindPopup(`
-    <div style="text-align:center">
-      <img src="her.jpg" class="popup-img"><br>
-      <div class="love-text">
-        The most beautiful bloom lives here ❤️
+  L.marker([11.0200, 76.9600]).addTo(map)
+    .bindPopup(`
+      <div style="text-align:center">
+        <img src="./her.jpg" class="popup-img"><br>
+        <div class="love-text">
+          The rarest bloom lives here ❤️
+        </div>
       </div>
-    </div>
-  `);
-
+    `);
 </script>
 
 </body>
 </html>
-
